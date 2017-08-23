@@ -38,9 +38,8 @@ notice the masking value of y_true should be -1
 def custom_cce(y_true, y_pred):
     b = K.not_equal(y_true, -K.ones_like(y_true))
     b = K.cast(b, dtype='float64')
-    losses =K.categorical_crossentropy(target = y_true, output = y_pred)*b/K.sum(b)
-    print('custom_cce loss ',losses.sum().eval())
-    return  losses.sum()
+    losses = K.categorical_crossentropy(target = y_true, output = y_pred) * K.mean(b,axis = -1)
+    return  losses
 
 train_pred = np.array([ [ [0.1, 0.2, 0.7], [0.1, 0.4, 0.5], [0.8, 0.1, 0.1] ],
             [ [0.2, 0.5, 0.3], [0.5,0.2,0.3], [0.3,0.1, 0.6] ],
